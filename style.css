@@ -467,3 +467,27 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
   .shot img { max-height: 40dvh; }
   .winbody h3 { font-size: 30px; }
 }
+
+/* ===== phones: a left sidebar with plain section names ===== */
+.guide .narrow { display: none; }
+@media (max-width: 700px) {
+  body { flex-direction: row; }
+  .guide {
+    position: static; flex: none; width: 104px; height: 100dvh; padding: 14px 6px 12px; pointer-events: auto;
+    flex-direction: column; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; gap: 14px;
+    background: #fff5fb; border-right: 3.5px solid var(--ink); overflow-y: auto;
+  }
+  .guide h1 { font-size: 23px; line-height: 1.05; white-space: normal; text-align: center; rotate: -2deg; }
+  .guide h1 .star { display: block; font-size: 16px; }
+  .guide nav { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 10px; }
+  .guide .wide { display: none; } .guide .narrow { display: inline; }
+  .guide nav button, .guide nav button:nth-child(odd), .guide nav button:nth-child(even) {
+    rotate: 0deg; width: 100%; font-size: 21px; line-height: 1.1; padding: 9px 2px 10px; text-align: center;
+    background: #f9c6de; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 2px 3px 0 var(--ink); color: var(--ink);
+  }
+  .guide nav button:nth-child(odd) { background: #f48cc0; }
+  .guide nav button:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+  .room { min-width: 0; height: 100dvh; }
+  .swipe { left: calc(50% + 52px); font-size: 17px; padding: 3px 12px 5px; }
+  .nowplaying { left: 114px; max-width: calc(100vw - 124px); }
+}
