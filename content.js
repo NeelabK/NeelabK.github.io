@@ -5,14 +5,14 @@
 // ============================================================
 window.SITE = {
   name: "Neelab",
-  tagline: "creative technologist",
+  tagline: "creative tech enthusiast",
 
   // ---------- CORKBOARD (about / resume) ----------
   about: {
-    bio: "I'm a computer science student at the University of Waterloo. I write GPU kernels and SIMD code that push hardware to its limits, and I build pink, Y2K-flavoured things for the browser. Snoop around my room to see both.",
+    bio: "I'm a computer science student at the University of Waterloo. I like writing low-level code and understanding how things work, but I also love creating fun projects like these! Take a snoop around my room to explore!",
     resumeUrl: "", // e.g. "resume.pdf" once you have a copy you are happy to share publicly
     education: [
-      { school: "University of Waterloo", detail: "Bachelor of Computer Science · Women in Computer Science Executive", when: "Sept 2023 – April 2028" },
+      { school: "University of Waterloo", detail: "Computer Science student", when: "Present" },
     ],
     experience: [
       { role: "Software Engineering Intern", place: "Microsoft", when: "June – Aug 2026 · Austin, TX",
@@ -23,7 +23,7 @@ window.SITE = {
         note: "Anomaly-detection models on Google Cloud Vertex AI, with SIMD-accelerated execution improving throughput by 25%." },
     ],
     // Add your fun facts here, e.g. ["I can ...", "I once ..."]. Empty shows "coming soon".
-    facts: [],
+    facts: ["I like to design clothes and jewelry for fun", "I write screenplays"],
     skills: [
       "C++", "Python", "Java", "JavaScript", "SQL", "Assembly",
       "CUDA", "TensorFlow", "Docker", "Kubernetes", "Google Cloud", "PostgreSQL", "Git",
