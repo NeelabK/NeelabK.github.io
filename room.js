@@ -245,7 +245,7 @@
       };
       tick(); timer = setInterval(tick, 60000 / bpm / 2);
     }
-    function silence() { clearInterval(timer); timer = null; audio.pause(); }
+    function silence() { clearInterval(timer); timer = null; audio.pause(); if (ytReady) yt.pauseVideo(); }
 
     function render() {
       document.body.classList.toggle("playing", playing);
@@ -253,6 +253,8 @@
       $("#lcd1").textContent = pl ? t.name : tr ? tr.title : "pick a tape";
       $("#lcd2").textContent = pl ? "on spotify ♥" : tr ? tr.artist : "♥ ♥ ♥";
       $("#spot").hidden = !pl;
+      $("#ytBox").hidden = !(tr && tr.yt);
+      $("#tapeLink").hidden = !(t && t.link); if (t && t.link) $("#tapeLink").href = t.link;
       bPlay.classList.toggle("on", playing); bPlay.setAttribute("aria-label", playing ? "Pause" : "Play");
       npToggle.textContent = playing ? "⏸" : "▶"; npToggle.setAttribute("aria-label", playing ? "Pause" : "Play");
       np.hidden = !tr; if (tr) npText.textContent = `${t.name} · ${tr.title}`;
@@ -260,6 +262,35 @@
       tracksEl.replaceChildren(...(t ? (t.tracks || []).map((x, i) =>
         el("li", { class: i === track ? "on" : null }, el("button", { text: `${x.title} — ${x.artist}${!x.src && x.link ? " ↗" : ""}`, onclick: () => play(tape, i) }))) : []));
     }
+    // YouTube tracks: the real song plays in a small video inside the boombox,
+    // and the drawn buttons, track list and room lights all follow it.
+    let yt = null, ytReady = false, ytWant = null, ytNow = null, ytFails = 0;
+    function ytInit() {
+      if (yt || !window.YT || !window.YT.Player) return;
+      yt = new YT.Player("ytEmbed", {
+        width: "100%", height: "100%",
+        playerVars: { playsinline: 1, rel: 0 },
+        events: {
+          onReady: () => { ytReady = true; if (ytWant) { ytNow = ytWant; yt.loadVideoById(ytWant); ytWant = null; } },
+          onStateChange: (e) => {
+            if (e.data === 1) { ytFails = 0; playing = true; render(); }
+            else if (e.data === 2) { playing = false; render(); }
+            else if (e.data === 0) skip(1);
+          },
+          // a video that cannot be embedded or was removed: move on to the next song
+          onError: () => { ytNow = null; if (++ytFails < S.mixtapes[tape].tracks.length) skip(1); else { playing = false; render(); } },
+        },
+      });
+    }
+    function ytLoad() {
+      if (window.YT && window.YT.Player) return ytInit();
+      if ($("#ytApi")) return;
+      window.onYouTubeIframeAPIReady = ytInit;
+      document.head.append(el("script", { id: "ytApi", src: "https://www.youtube.com/iframe_api", async: "" }));
+    }
+    // get the player ready in the background so the first song starts quickly
+    if (S.mixtapes.some((t) => (t.tracks || []).some((x) => x.yt))) addEventListener("load", () => setTimeout(ytLoad, 1200));
+
     // Spotify playlist tapes: Spotify's own player sits inside the boombox,
     // and the drawn play button and the room's lights follow it.
     let spotCtrl = null, spotFor = -1;
@@ -290,6 +321,12 @@
       if (S.mixtapes[ti].playlist) { tape = ti; track = 0; playing = false; render(); loadSpotify(ti); return; }
       if (spotCtrl && playing) spotCtrl.pause();
       tape = ti; track = tri; playing = true;
+      if (S.mixtapes[ti].tracks[tri].yt) {
+        const id = S.mixtapes[ti].tracks[tri].yt;
+        if (ytReady) { if (ytNow === id) yt.playVideo(); else { ytNow = id; yt.loadVideoById(id); } }
+        else { ytWant = id; ytLoad(); }
+        render(); return;
+      }
       const tr = S.mixtapes[tape].tracks[track], seed = tape * 97 + track * 13 + 5;
       if (!tr.src && tr.link) { playing = false; render(); window.open(tr.link, "_blank", "noopener"); return; }
       if (tr.src) { audio.src = tr.src; audio.play().catch(() => synthStart(seed)); }

@@ -130,18 +130,25 @@ window.SITE = {
   ],
 
   // ---------- BOOMBOX (mixtapes) ----------
-  // A tape with `playlist` (a Spotify playlist link) shows Spotify's
-  // player inside the boombox. To add another tape, copy the block.
-  // A tape can instead list `tracks`, each with a `link` (opens a
-  // streaming page) or a `src` (an audio file you have the rights to
-  // share, e.g. "music/song.mp3", which plays on the boombox itself).
+  // Each track plays through YouTube: `yt` is the video's id, the part
+  // after "watch?v=" in its address. Use the artist's official upload.
+  // `link` on a tape adds a "full playlist" link under the track list.
+  // (A track can instead use `src` for an audio file you have the
+  // rights to share, e.g. "music/song.mp3".)
   mixtapes: [
     {
       name: "girly music",
-      note: "my playlist, straight from spotify",
+      note: "for snooping through my stuff",
       color: "#f6a6cf",
-      playlist: "https://open.spotify.com/playlist/5BDu9ZYCYYnxsnU8WPkENC",
-      tracks: [],
+      link: "https://open.spotify.com/playlist/5BDu9ZYCYYnxsnU8WPkENC",
+      tracks: [
+        { title: "Flaming Hot Cheetos", artist: "Clairo", yt: "f43ODtOUmBw" },
+        { title: "Pretty Girl", artist: "Clairo", yt: "mngtcfcaVrI" },
+        { title: "Are You Bored Yet?", artist: "Wallows ft. Clairo", yt: "wIgmyE5Juzw" },
+        { title: "C U Girl", artist: "Steve Lacy", yt: "t0fn0Q0DB0E" },
+        { title: "Duvet", artist: "Bôa", yt: "Uoox9fpmDP0" },
+        { title: "You Are the Right One", artist: "Sports", yt: "BHBLjY4KB7U" },
+      ],
     },
   ],
 
