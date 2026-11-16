@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Mystery+Quest&family=Silkscreen&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 
@@ -37,6 +37,7 @@
   <g id="hots"></g>
 </svg>
 </main>
+<div class="swipe" id="swipe" hidden>← swipe to look around →</div>
 
 <!-- now playing pill -->
 <div class="nowplaying" id="nowplaying" hidden>
@@ -138,11 +139,12 @@
       </g>
     </svg>
     <p class="crayon small" id="contactHint">pick one on the screen ♥</p>
+    <ul class="contactBtns" id="contactBtns"></ul>
   </div>
 </dialog>
 
 <audio id="audio" preload="none"></audio>
-<script src="content.js?v=16"></script>
-<script src="room.js?v=16"></script>
+<script src="content.js?v=17"></script>
+<script src="room.js?v=17"></script>
 </body>
 </html>

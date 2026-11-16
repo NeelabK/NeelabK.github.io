@@ -383,3 +383,55 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
 .spot iframe { display: block; width: 100%; border: 3.5px solid var(--ink); border-radius: 16px; background: #fdf3ea; }
 .spot a { display: block; margin-top: 8px; text-align: center; font-family: var(--crayon); font-size: 22px; color: var(--red); text-decoration: none; }
 .spot a:hover { text-decoration: underline wavy; }
+
+/* ===== phones and touch screens ===== */
+.swipe { position: fixed; z-index: 4; left: 50%; bottom: 18px; translate: -50% 0; padding: 4px 16px 6px; border-radius: 999px; white-space: nowrap;
+  background: #fff5fbee; border: 3px solid var(--ink); box-shadow: 2px 3px 0 var(--ink); font-family: var(--crayon); font-size: 20px; color: var(--red);
+  pointer-events: none; animation: nudge 1.2s ease-in-out infinite alternate; }
+.swipe[hidden] { display: none; }
+@keyframes nudge { from { translate: calc(-50% - 8px) 0; } to { translate: calc(-50% + 8px) 0; } }
+.room { scrollbar-width: none; -webkit-overflow-scrolling: touch; } .room::-webkit-scrollbar { display: none; }
+.contactBtns { display: none; }
+@media (hover: none) {
+  .hot .tag { opacity: 1; font-size: 26px; }
+}
+@media (max-width: 700px) {
+  .guide { padding: 6px 8px 26px; gap: 0 10px; }
+  .guide h1 { font-size: 30px; }
+  .guide nav { gap: 0 14px; }
+  .guide nav button { font-size: 22px; padding: 2px 2px 5px; }
+
+  /* diary: the drawn book on top, the entries as normal text underneath */
+  .diary { max-height: 92dvh; overflow-y: auto; }
+  .diary > .x { top: 6px; right: 6px; z-index: 5; position: fixed; }
+  .diaryart { aspect-ratio: auto; container-type: normal; filter: none; }
+  .diaryart svg { position: static; display: block; height: auto; filter: drop-shadow(0 6px 0 #0003); }
+  .dpage { position: static; transform: none; width: auto; height: auto; overflow: visible; background: #fdeee6; border: 3.5px solid var(--ink); border-radius: 12px; padding: 14px 16px; margin-top: 10px; }
+  .dleft h2 { margin: 0 0 6px; height: auto; font-size: 30px; }
+  .dleft #postList { height: auto; padding: 0; overflow: visible; }
+  .dleft #postList li { border-bottom-width: 2px; }
+  .dleft #postList button { font-size: 21px; padding: 6px 4px; }
+  .dleft #postList button small { font-size: 16px; }
+  .dright time { font-size: 17px; }
+  .dright h3 { font-size: 26px; }
+  .dright .ex { font-size: 19px; margin-top: 6px; -webkit-line-clamp: 4; }
+  .dright .readit { margin-top: 12px; max-width: none; font-size: 20px; border-width: 3px; border-radius: 12px; padding: 5px 14px; box-shadow: 2px 3px 0 var(--ink); rotate: -1deg; }
+  .sheet { z-index: 4; border-radius: 0; border: 0; padding-top: 54px; }
+
+  /* phone: the drawn screen is too small to tap, so list the contacts underneath */
+  .phart { max-height: 46dvh; }
+  .menu, #contactHint { display: none; }
+  .crayon { font-size: 28px; }
+  .contactBtns { display: grid; gap: 8px; list-style: none; margin: 6px 0 0; padding: 0; }
+  .contactBtns a { display: block; background: #f48cc0; color: var(--ink); text-decoration: none; border: 3.5px solid var(--ink); border-radius: 14px; padding: 8px 14px; box-shadow: 2px 3px 0 var(--ink); font-family: var(--hand); font-size: 20px; overflow-wrap: anywhere; }
+  .contactBtns b { display: block; font-family: var(--pixel); font-size: 11px; font-weight: 400; }
+  .flip > .x { top: 4px; }
+
+  /* corkboard + boombox */
+  .pin text { font-size: 52px; }
+  .note { font-size: 19px; padding: 26px 16px 16px; }
+  .note h2 { font-size: 28px; }
+  .bbart { max-height: 34dvh; }
+  .tapepanel { padding: 12px; border-radius: 20px; }
+  .nowplaying { bottom: 60px; }
+}

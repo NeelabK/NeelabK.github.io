@@ -87,6 +87,20 @@
     });
   })();
 
+  // ---------- phones: the room is wider than the screen, so start on the girl and hint to swipe ----------
+  (function pan() {
+    const room = $(".room"), swipe = $("#swipe");
+    const centre = () => {
+      const extra = room.scrollWidth - room.clientWidth;
+      swipe.hidden = extra < 40 || room.dataset.moved === "1";
+      if (extra >= 40 && room.dataset.moved !== "1") room.scrollLeft = Math.max(0, Math.min(extra, room.scrollWidth * 0.6 - room.clientWidth / 2));
+    };
+    let auto = true;
+    room.addEventListener("scroll", () => { if (!auto) { room.dataset.moved = "1"; swipe.hidden = true; } });
+    const run = () => { auto = true; centre(); setTimeout(() => (auto = false), 300); };
+    run(); addEventListener("load", run); addEventListener("resize", run);
+  })();
+
   // ---------- opening / closing ----------
   const open = (id) => { const d = $(`#dlg-${id}`); if (d && !d.open) d.showModal(); };
   $$("[data-open]").forEach((t) => {
@@ -199,6 +213,7 @@
     const hint = () => ($("#contactHint").textContent = c.value);
     a.addEventListener("mouseenter", hint); a.addEventListener("focus", hint);
     $("#contactList").append(a);
+    $("#contactBtns").append(el("li", {}, el("a", { href: c.url, target: "_blank", rel: "noopener" }, el("b", { text: c.label }), c.value)));
   });
 
   // ---------- boombox: mixtapes ----------
