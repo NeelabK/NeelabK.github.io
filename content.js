@@ -144,6 +144,7 @@ window.SITE = {
       tracks: [
         { title: "Flaming Hot Cheetos", artist: "Clairo", yt: "f43ODtOUmBw" },
         { title: "Pretty Girl", artist: "Clairo", yt: "mngtcfcaVrI" },
+        { title: "Juna", artist: "Clairo", yt: "i_rw1C9eG_Q" },
         { title: "Are You Bored Yet?", artist: "Wallows ft. Clairo", yt: "wIgmyE5Juzw" },
         { title: "C U Girl", artist: "Steve Lacy", yt: "t0fn0Q0DB0E" },
         { title: "Duvet", artist: "Bôa", yt: "Uoox9fpmDP0" },
