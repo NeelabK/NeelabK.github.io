@@ -73,7 +73,7 @@ body.playing .glow:not(.slow):not(.screen) { animation-duration: .45s !important
 }
 .hot .spark {
   font-size: 30px; fill: #ffd21f; stroke: var(--ink); stroke-width: 1.5px; pointer-events: none;
-  transform-box: fill-box; transform-origin: center; animation: twinkle 1.6s ease-in-out infinite;
+  animation: sparkle 1.6s ease-in-out infinite;
 }
 .hot .notes { font-size: 38px; stroke: #fff; stroke-width: 4px; paint-order: stroke; fill: var(--hot); opacity: 0; font-family: var(--hand); pointer-events: none; }
 .hot:hover, .hot:focus-visible, .hot.lit { filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px var(--hot)); }
@@ -271,10 +271,10 @@ body.playing .eq i:nth-child(2) { animation-delay: .15s; } body.playing .eq i:nt
 .bbart .bb:hover > circle, .bbart .bb:focus-visible > circle { fill-opacity: .4; }
 .bbart .bb:active { transform: translateY(4px); }
 .bbart .pause { display: none; } .bbart .bb.on .pause { display: block; }
-.bbart .thump { fill: none; stroke: #fff; stroke-width: 10; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.bbart .thump { fill: none; stroke: #fff; stroke-width: 10; opacity: 0; transform-box: view-box; }
 body.playing .bbart .thump { animation: ring .45s ease-out infinite; }
 @keyframes ring { from { opacity: .7; transform: scale(.55); } to { opacity: 0; transform: scale(1.02); } }
-body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate; transform-origin: 50% 100%; transform-box: fill-box; }
+body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate; transform-box: view-box; transform-origin: 768px 960px; }
 @keyframes bump { to { transform: scale(1.012, .985); } }
 .lcdtxt text { font-family: var(--pixel); font-size: 22px; fill: #b8ffb0; }
 .lcdtxt .dim { font-size: 17px; fill: #7fd77a; }
@@ -451,3 +451,5 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
   .tapepanel { grid-template-columns: 1fr; }
   .bbart { max-height: 26dvh; }
 }
+
+@keyframes sparkle { 50% { opacity: .25; } }
