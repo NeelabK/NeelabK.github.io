@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Neelab's room: a creative technologist's portfolio you explore by snooping around her bedroom.">
+<title>my room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Mystery+Quest&family=Silkscreen&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=15">
+</head>
+<body>
+
+<header class="guide">
+  <h1><span class="star">✦</span> <span id="siteName"></span>'s room <span class="star">✦</span></h1>
+  <nav aria-label="Sections">
+    <span class="psst">snoop around →</span>
+    <button data-open="laptop">laptop <small>projects</small></button>
+    <button data-open="boombox">boombox <small>mixtapes</small></button>
+    <button data-open="diary">diary <small>blog</small></button>
+    <button data-open="board">corkboard <small>about me</small></button>
+    <button data-open="phone">phone <small>contact</small></button>
+  </nav>
+</header>
+
+<main class="room">
+<svg id="scene" viewBox="0 0 1670 942" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An illustrated bedroom. Click the laptop, boombox, diary, corkboard or phone to explore.">
+  <defs>
+    <radialGradient id="gWarm"><stop offset="0" stop-color="#fff6c2" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd84a" stop-opacity=".55"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gOrange"><stop offset="0" stop-color="#fff0c0" stop-opacity=".95"/><stop offset=".4" stop-color="#ff9a3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gPink"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".4" stop-color="#ff9fd0" stop-opacity=".45"/><stop offset="1" stop-color="#ff9fd0" stop-opacity="0"/></radialGradient>
+    <g id="clips"></g>
+  </defs>
+  <image href="images/room.webp" width="1670" height="942"/>
+  <g id="glows"></g>
+  <g id="hots"></g>
+</svg>
+</main>
+
+<!-- now playing pill -->
+<div class="nowplaying" id="nowplaying" hidden>
+  <span class="eq"><i></i><i></i><i></i></span>
+  <span id="npText"></span>
+  <button id="npToggle" aria-label="Pause">⏸</button>
+</div>
+
+<!-- ===== LAPTOP ===== -->
+<dialog id="dlg-laptop" aria-labelledby="t-laptop">
+  <div class="win">
+    <div class="titlebar"><span id="t-laptop">my_projects.exe</span><button class="x" data-close aria-label="Close">×</button></div>
+    <div class="tabs" role="tablist" id="projTabs"></div>
+    <div class="winbody" id="projPanel" role="tabpanel"></div>
+  </div>
+</dialog>
+
+<!-- ===== BOOMBOX ===== -->
+<dialog id="dlg-boombox" aria-labelledby="t-boombox">
+  <div class="boom">
+    <button class="x" data-close aria-label="Close">×</button>
+    <h2 id="t-boombox" class="sr">Mixtapes</h2>
+    <svg class="bbart" viewBox="120 40 1300 930">
+      <defs><clipPath id="lcdclip"><rect x="664" y="586" width="208" height="66" rx="4"/></clipPath></defs>
+      <g class="bbody">
+        <image href="images/boombox.webp" width="1536" height="1024"/>
+        <circle class="thump" cx="382" cy="712" r="150"/><circle class="thump" cx="1150" cy="712" r="150"/>
+        <rect x="664" y="586" width="208" height="66" rx="4" fill="#2a3b2c" opacity=".82"/>
+        <g clip-path="url(#lcdclip)" class="lcdtxt">
+          <text id="lcd1" x="672" y="614"></text><text id="lcd2" x="672" y="642" class="dim"></text>
+        </g>
+      </g>
+      <g id="bPrev" class="bb" role="button" tabindex="0" aria-label="Previous track"><circle cx="665" cy="768" r="40"/></g>
+      <g id="bPlay" class="bb" role="button" tabindex="0" aria-label="Play"><circle cx="760" cy="768" r="44"/>
+        <g class="pause"><circle cx="760" cy="768" r="31" fill="#f3ecd9"/><rect x="746" y="752" width="10" height="32" rx="2" fill="#241a1f"/><rect x="764" y="752" width="10" height="32" rx="2" fill="#241a1f"/></g></g>
+      <g id="bNext" class="bb" role="button" tabindex="0" aria-label="Next track"><circle cx="853" cy="768" r="40"/></g>
+    </svg>
+    <div class="tapepanel">
+      <div class="tapes" id="tapes"></div>
+      <ol class="tracks" id="tracks"></ol>
+    </div>
+  </div>
+</dialog>
+
+<!-- ===== DIARY ===== -->
+<dialog id="dlg-diary" aria-labelledby="t-diary">
+  <div class="diary">
+    <button class="x" data-close aria-label="Close">×</button>
+    <div class="diaryart">
+      <svg viewBox="0 0 1536 1024" aria-hidden="true">
+        <defs><filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+        <image href="images/diary.webp" width="1536" height="1024"/>
+        <g fill="#f9dfd3" filter="url(#soft)">
+          <polygon points="392,262 690,252 796,690 300,704 236,474 392,446"/>
+          <polygon points="752,222 1196,186 1236,398 1050,410 1044,632 872,646"/>
+        </g>
+      </svg>
+      <div class="dpage dleft">
+        <h2 id="t-diary">dear diary,</h2>
+        <ul id="postList"></ul>
+      </div>
+      <div class="dpage dright" id="postPeek"></div>
+    </div>
+    <article class="sheet" id="sheet" hidden>
+      <i class="washi w2"></i>
+      <div class="stamp">♥<br>DEAR<br>DIARY</div>
+      <button class="back" id="sheetBack">← back to diary</button>
+      <div id="postBody"></div>
+    </article>
+  </div>
+</dialog>
+
+<!-- ===== CORKBOARD ===== -->
+<dialog id="dlg-board" aria-labelledby="t-board">
+  <div class="pinboard">
+    <button class="x" data-close aria-label="Close">×</button>
+    <svg class="boardart" viewBox="150 30 1240 950">
+      <defs id="pinClips"></defs>
+      <image href="images/corkboard.webp" width="1536" height="1024"/>
+      <g id="pins"></g>
+    </svg>
+    <section class="note" id="note" aria-live="polite"></section>
+  </div>
+</dialog>
+
+<!-- ===== PHONE ===== -->
+<dialog id="dlg-phone" aria-labelledby="t-phone">
+  <div class="flip">
+    <button class="x" data-close aria-label="Close">×</button>
+    <h2 id="t-phone" class="crayon">call me, beep me</h2>
+    <svg class="phart" viewBox="390 50 780 900">
+      <image href="images/phone.webp" width="1536" height="1024"/>
+      <g transform="translate(905 185) matrix(.966 .267 -.389 .921 0 0)" id="contactList" class="menu">
+        <text x="88" y="24" text-anchor="middle" class="hd">CONTACTS</text>
+      </g>
+    </svg>
+    <p class="crayon small" id="contactHint">pick one on the screen ♥</p>
+  </div>
+</dialog>
+
+<audio id="audio" preload="none"></audio>
+<script src="content.js?v=15"></script>
+<script src="room.js?v=15"></script>
+</body>
+</html>
