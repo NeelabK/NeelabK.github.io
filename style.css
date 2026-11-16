@@ -453,3 +453,6 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
 }
 
 @keyframes sparkle { 50% { opacity: .25; } }
+
+/* sparkle hints removed: the labels and header already show what is clickable */
+.hot .spark { display: none; }
