@@ -127,7 +127,7 @@
       $$("button", tabs).forEach((b, j) => b.setAttribute("aria-selected", j === i));
       panel.classList.toggle("noimg", !p.image);
       panel.replaceChildren(
-        ...(p.image ? [el("div", { class: "shot" }, el("img", { src: p.image, alt: `${p.name} screenshot`, loading: "lazy" }))] : []),
+        ...(p.image ? [el("div", { class: "shot" }, el("img", { src: p.image, alt: `${p.name} screenshot` }))] : []),
         el("div", {},
           el("h3", { text: p.name }),
           el("div", { class: "yr", text: p.year }),

@@ -456,3 +456,14 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
 
 /* sparkle hints removed: the labels and header already show what is clickable */
 .hot .spark { display: none; }
+
+/* project pop-up on phones: stack picture then text as plain blocks (a grid let the text slide over the picture in Safari) */
+.x, .titlebar .x { font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; font-style: normal; }
+.shot { width: fit-content; max-width: 100%; }
+.shot img { width: auto; max-width: 100%; height: auto; max-height: 56dvh; }
+@media (max-width: 700px) {
+  .winbody, .winbody.noimg { display: block; }
+  .shot { margin: 0 auto 16px; }
+  .shot img { max-height: 40dvh; }
+  .winbody h3 { font-size: 30px; }
+}
