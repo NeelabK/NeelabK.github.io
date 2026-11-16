@@ -234,18 +234,46 @@
 
     function render() {
       document.body.classList.toggle("playing", playing);
-      const t = S.mixtapes[tape], tr = t?.tracks[track];
-      $("#lcd1").textContent = tr ? tr.title : "pick a tape";
-      $("#lcd2").textContent = tr ? tr.artist : "♥ ♥ ♥";
+      const t = S.mixtapes[tape], tr = (t?.tracks || [])[track], pl = t?.playlist;
+      $("#lcd1").textContent = pl ? t.name : tr ? tr.title : "pick a tape";
+      $("#lcd2").textContent = pl ? "on spotify ♥" : tr ? tr.artist : "♥ ♥ ♥";
+      $("#spot").hidden = !pl;
       bPlay.classList.toggle("on", playing); bPlay.setAttribute("aria-label", playing ? "Pause" : "Play");
       npToggle.textContent = playing ? "⏸" : "▶"; npToggle.setAttribute("aria-label", playing ? "Pause" : "Play");
       np.hidden = !tr; if (tr) npText.textContent = `${t.name} · ${tr.title}`;
       $$(".tape", tapesEl).forEach((b, i) => b.setAttribute("aria-pressed", i === tape));
-      tracksEl.replaceChildren(...(t ? t.tracks.map((x, i) =>
+      tracksEl.replaceChildren(...(t ? (t.tracks || []).map((x, i) =>
         el("li", { class: i === track ? "on" : null }, el("button", { text: `${x.title} — ${x.artist}${!x.src && x.link ? " ↗" : ""}`, onclick: () => play(tape, i) }))) : []));
+    }
+    // Spotify playlist tapes: Spotify's own player sits inside the boombox,
+    // and the drawn play button and the room's lights follow it.
+    let spotCtrl = null, spotFor = -1;
+    function loadSpotify(ti) {
+      if (spotFor === ti) return;
+      spotFor = ti;
+      const url = S.mixtapes[ti].playlist, id = (url.match(/playlist\/([A-Za-z0-9]+)/) || [])[1];
+      $("#spotLink").href = url;
+      if (!id) return;
+      const uri = `spotify:playlist:${id}`;
+      if (spotCtrl) return spotCtrl.loadUri(uri);
+      const make = (API) => API.createController($("#spotEmbed"), { uri, width: "100%", height: 352 }, (ctrl) => {
+        spotCtrl = ctrl;
+        ctrl.addListener("playback_update", (e) => {
+          playing = !e.data.isPaused;
+          document.body.classList.toggle("playing", playing);
+          bPlay.classList.toggle("on", playing);
+        });
+      });
+      if (window.SpotifyIframeApi) make(window.SpotifyIframeApi);
+      else {
+        window.onSpotifyIframeApiReady = (API) => { window.SpotifyIframeApi = API; make(API); };
+        document.head.append(el("script", { src: "https://open.spotify.com/embed/iframe-api/v1", async: "" }));
+      }
     }
     function play(ti, tri) {
       silence();
+      if (S.mixtapes[ti].playlist) { tape = ti; track = 0; playing = false; render(); loadSpotify(ti); return; }
+      if (spotCtrl && playing) spotCtrl.pause();
       tape = ti; track = tri; playing = true;
       const tr = S.mixtapes[tape].tracks[track], seed = tape * 97 + track * 13 + 5;
       if (!tr.src && tr.link) { playing = false; render(); window.open(tr.link, "_blank", "noopener"); return; }
@@ -255,10 +283,11 @@
     }
     function toggle() {
       if (tape < 0) return S.mixtapes.length && play(0, 0);
+      if (S.mixtapes[tape].playlist) { if (spotCtrl) spotCtrl.togglePlay(); return; }
       if (playing) { silence(); playing = false; render(); } else play(tape, track);
     }
     function skip(d) {
-      if (tape < 0) return;
+      if (tape < 0 || S.mixtapes[tape].playlist) return;
       const n = S.mixtapes[tape].tracks.length;
       play(tape, (track + d + n) % n);
     }

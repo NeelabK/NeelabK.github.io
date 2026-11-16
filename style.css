@@ -376,3 +376,10 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
 .shot img { object-fit: contain; }
 .shot { aspect-ratio: auto; display: block; }
 .shot img { display: block; width: 100%; height: auto; max-height: 56dvh; }
+
+/* Spotify playlist inside the boombox */
+.spot { margin-top: 14px; }
+.spot[hidden] { display: none; }
+.spot iframe { display: block; width: 100%; border: 3.5px solid var(--ink); border-radius: 16px; background: #fdf3ea; }
+.spot a { display: block; margin-top: 8px; text-align: center; font-family: var(--crayon); font-size: 22px; color: var(--red); text-decoration: none; }
+.spot a:hover { text-decoration: underline wavy; }

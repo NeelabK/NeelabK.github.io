@@ -130,20 +130,18 @@ window.SITE = {
   ],
 
   // ---------- BOOMBOX (mixtapes) ----------
-  // Each track opens `link` (a streaming page) when clicked.
-  // Swap the search links below for exact Spotify / YouTube links.
-  // A track with `src` (an audio file you have the rights to share,
-  // e.g. "music/song.mp3") plays right on the boombox instead.
+  // A tape with `playlist` (a Spotify playlist link) shows Spotify's
+  // player inside the boombox. To add another tape, copy the block.
+  // A tape can instead list `tracks`, each with a `link` (opens a
+  // streaming page) or a `src` (an audio file you have the rights to
+  // share, e.g. "music/song.mp3", which plays on the boombox itself).
   mixtapes: [
     {
-      name: "snooping music",
-      note: "for going through my stuff",
+      name: "girly music",
+      note: "my playlist, straight from spotify",
       color: "#f6a6cf",
-      tracks: [
-        { title: "Pretty Girl", artist: "Clairo", link: "https://open.spotify.com/search/Clairo%20Pretty%20Girl" },
-        { title: "Duvet", artist: "Bôa", link: "https://open.spotify.com/search/B%C3%B4a%20Duvet" },
-        { title: "Meet Me in the Pale Moonlight", artist: "Lana Del Rey", link: "https://open.spotify.com/search/Lana%20Del%20Rey%20Meet%20Me%20in%20the%20Pale%20Moonlight" },
-      ],
+      playlist: "https://open.spotify.com/playlist/5BDu9ZYCYYnxsnU8WPkENC",
+      tracks: [],
     },
   ],
 
