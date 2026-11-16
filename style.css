@@ -491,3 +491,16 @@ body.playing .bbart .bbody { animation: bump .45s ease-in-out infinite alternate
   .swipe { left: calc(50% + 52px); font-size: 17px; padding: 3px 12px 5px; }
   .nowplaying { left: 114px; max-width: calc(100vw - 124px); }
 }
+
+/* ===== the cat can be petted ===== */
+.cat { cursor: grab; outline: none; }
+.cat:active { cursor: grabbing; }
+.cat .art { transform-box: view-box; }
+.cat .tag { font-family: var(--crayon); font-size: 28px; fill: var(--red); stroke: #fff; stroke-width: 9px; stroke-linejoin: round; paint-order: stroke; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.cat:hover, .cat:focus-visible { filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 12px var(--hot)); }
+.cat.petting .tag { opacity: 1; }
+.cat.petting .art { animation: purr .16s ease-in-out infinite alternate; }
+@keyframes purr { from { scale: 1 1; } to { scale: 1.025 .965; } }
+.heart { font-size: 34px; fill: #ff4f9a; stroke: #fff; stroke-width: 5px; paint-order: stroke; pointer-events: none; opacity: 0; animation: floatup 1.4s ease-out forwards; }
+@keyframes floatup { 0% { opacity: 0; translate: 0 0; } 15% { opacity: 1; } 100% { opacity: 0; translate: 0 -90px; } }
+@media (hover: none) { .cat .tag { font-size: 24px; } }

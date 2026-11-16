@@ -85,6 +85,42 @@
       if (debug) g.append(svg("polygon", { points: h.pts, fill: "#0f03", stroke: "#0a0", "stroke-width": 2 }));
       hots.append(g);
     });
+
+    // ---- the cat: click or tap to pet it ----
+    const CAT = "684,622 700,592 716,586 740,598 800,596 838,616 836,640 800,652 716,652 690,644";
+    const cp = svg("clipPath", { id: "clip-cat" }); cp.append(svg("polygon", { points: CAT })); clips.append(cp);
+    const cat = svg("g", { class: "cat", tabindex: 0, role: "button", "aria-label": "Pet the cat" });
+    const catArt = svg("g", { class: "art" }); catArt.style.transformOrigin = "760px 648px";
+    catArt.append(svg("image", { href: "images/room.webp", width: W, height: H, "clip-path": "url(#clip-cat)" }));
+    const catTag = svg("text", { class: "tag", x: 760, y: 572, "text-anchor": "middle" });
+    cat.append(catArt, catTag); hots.append(cat);
+    const SAYS = ["purr ♥", "purrrr ♥", "mrrp!", "prrrrr ♥♥", "*slow blink*", "more pets pls"];
+    let pets = 0, purrCtx = null, calm = null;
+    function purr() {
+      try {
+        purrCtx = purrCtx || new (window.AudioContext || window.webkitAudioContext)();
+        purrCtx.resume();
+        const t = purrCtx.currentTime, o = purrCtx.createOscillator(), lfo = purrCtx.createOscillator(), amp = purrCtx.createGain(), out = purrCtx.createGain();
+        o.type = "sawtooth"; o.frequency.value = 27; lfo.frequency.value = 23; amp.gain.value = 0.5;
+        lfo.connect(amp.gain); o.connect(amp).connect(out).connect(purrCtx.destination);
+        out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(0.16, t + 0.15); out.gain.linearRampToValueAtTime(0.12, t + 0.9); out.gain.linearRampToValueAtTime(0, t + 1.3);
+        o.start(t); lfo.start(t); o.stop(t + 1.35); lfo.stop(t + 1.35);
+      } catch (e) { /* no sound available: the hearts still show */ }
+    }
+    function pet() {
+      pets++;
+      catTag.textContent = SAYS[(pets - 1) % SAYS.length];
+      cat.classList.add("petting");
+      clearTimeout(calm); calm = setTimeout(() => cat.classList.remove("petting"), 1500);
+      for (let i = 0; i < 3; i++) {
+        const h = svg("text", { class: "heart", x: 716 + r() * 100, y: 600 - r() * 12 });
+        h.textContent = "♥"; h.style.animationDelay = `${i * 0.12}s`;
+        hots.append(h); setTimeout(() => h.remove(), 1700);
+      }
+      if (!document.body.classList.contains("playing")) purr();
+    }
+    cat.addEventListener("click", pet);
+    cat.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pet(); } });
   })();
 
   // ---------- phones: the room is wider than the screen, so start on the girl and hint to swipe ----------
